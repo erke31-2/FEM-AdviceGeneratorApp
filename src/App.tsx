@@ -63,7 +63,7 @@ const App = () => {
   }
 
   return (
-    <section>
+    <main>
       <article className="container">
         <h1 className="advice-header">ADVICE #{data?.slip?.id}</h1>
         <p className="advice-text">{content}</p>
@@ -80,7 +80,7 @@ const App = () => {
         . Coded by{" "}
         <a href="https://www.frontendmentor.io/profile/erke31-2">KaungSet</a>.
       </div>
-    </section>
+    </main>
   );
 };
 export default App;
