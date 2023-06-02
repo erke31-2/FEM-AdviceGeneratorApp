@@ -13,7 +13,6 @@ type AdviceResponse = {
 
 const App = () => {
   const [randomId, setRandomId] = useState(7);
-  console.log(randomId);
   
   const [imageSrc, setImageSrc] = useState("");
   const { status, data, error } = useQuery<AdviceResponse>({
