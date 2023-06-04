@@ -65,7 +65,7 @@ const App = () => {
     <main>
       <article className="container">
         <h1 className="advice-header">ADVICE #{data?.slip?.id}</h1>
-        <p className="advice-text">{content}</p>
+        <p className="advice-text">&ldquo;{content}&rdquo;</p>
         <img src={imageSrc} alt="pattern-divider" className="divider" />
         <button className="dice-btn" onClick={getRandomId}>
           <img src={diceSvg} alt="dice-button" />
