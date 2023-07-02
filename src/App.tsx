@@ -1,7 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
+
 import diceSvg from "./assets/images/icon-dice.svg";
 import mbDividerSvg from "./assets/images/pattern-divider-mobile.svg";
-import { useEffect, useState } from "react";
 import dtDividerSvg from "./assets/images/pattern-divider-desktop.svg";
 
 type AdviceResponse = {
@@ -12,9 +13,13 @@ type AdviceResponse = {
 };
 
 const App = () => {
-  const [randomId, setRandomId] = useState(7);
-  
-  const [imageSrc, setImageSrc] = useState("");
+  const generateRandomId = () => {
+    return Math.floor(Math.random() * 224 + 1);
+  };
+  const [randomId, setRandomId] = useState(generateRandomId());
+  console.log(randomId);
+
+  // const [imageSrc, setImageSrc] = useState("");
   const { status, data, error } = useQuery<AdviceResponse>({
     queryKey: ["advice", randomId],
     queryFn: async () => {
@@ -23,24 +28,24 @@ const App = () => {
     },
   });
 
-  useEffect(() => {
-    const handleResize = () => {
-      const screenWidth = window.innerWidth;
-      if (screenWidth <= 1240) {
-        setImageSrc(mbDividerSvg);
-      } else {
-        setImageSrc(dtDividerSvg);
-      }
-    };
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+  // useEffect(() => {
+  //   const handleResize = () => {
+  //     const screenWidth = window.innerWidth;
+  //     if (screenWidth <= 1240) {
+  //       setImageSrc(mbDividerSvg);
+  //     } else {
+  //       setImageSrc(dtDividerSvg);
+  //     }
+  //   };
+  //   handleResize();
+  //   window.addEventListener("resize", handleResize);
+  //   return () => {
+  //     window.removeEventListener("resize", handleResize);
+  //   };
+  // }, []);
 
   const getRandomId = () => {
-    const r = Math.floor(Math.random() * 224 + 1);
+    const r = generateRandomId();
     setRandomId(r);
   };
 
@@ -62,11 +67,15 @@ const App = () => {
   }
 
   return (
-    <main>
+    <section>
       <article className="container">
         <h1 className="advice-header">ADVICE #{data?.slip?.id}</h1>
         <p className="advice-text">&ldquo;{content}&rdquo;</p>
-        <img src={imageSrc} alt="pattern-divider" className="divider" />
+        <picture className="divider">
+          <source srcSet={dtDividerSvg} media="(min-width: 760px)" />
+          <img src={mbDividerSvg} alt="divider" />
+        </picture>
+
         <button className="dice-btn" onClick={getRandomId}>
           <img src={diceSvg} alt="dice-button" />
         </button>
@@ -79,7 +88,7 @@ const App = () => {
         . Coded by{" "}
         <a href="https://www.frontendmentor.io/profile/erke31-2">KaungSet</a>.
       </div>
-    </main>
+    </section>
   );
 };
 export default App;
